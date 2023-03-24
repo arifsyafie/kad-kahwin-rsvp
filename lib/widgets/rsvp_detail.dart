@@ -70,11 +70,9 @@ class RSVPDetail extends StatelessWidget {
                             color: Colors.grey,
                           ), // Set the border properties
                         ),
-                        child: const TableCell(
-                          child: Text(
-                            'Name',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
+                        child: Text(
+                          'Name',
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                       Container(
@@ -84,11 +82,9 @@ class RSVPDetail extends StatelessWidget {
                             color: Colors.grey,
                           ), // Set the border properties
                         ),
-                        child: const TableCell(
-                          child: Text(
-                            'Pax',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
+                        child: Text(
+                          'Pax',
+                          style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
@@ -107,9 +103,7 @@ class RSVPDetail extends StatelessWidget {
                               color: Colors.grey,
                             ), // Set the border properties
                           ),
-                          child: TableCell(
-                            child: Text(data.name),
-                          ),
+                          child: Text(data.name),
                         ),
                         Container(
                           decoration: BoxDecoration(
@@ -118,9 +112,7 @@ class RSVPDetail extends StatelessWidget {
                               color: Colors.grey,
                             ), // Set the border properties
                           ),
-                          child: TableCell(
-                            child: Text(data.pax.toString()),
-                          ),
+                          child: Text(data.pax.toString()),
                         ),
                       ],
                     );
