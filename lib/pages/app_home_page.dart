@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:kad_kahwin/pages/rsvp_page.dart';
+import 'package:kad_kahwin/pages/ucapan_page.dart';
+
 import '../constants/constants.dart';
 import '../widgets/widgets.dart';
 
@@ -27,50 +31,34 @@ class _AppHomePageState extends State<AppHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorsConstant.appWhite,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: 16.w),
-            Center(
-              child: Row(
-                children: [
-                  Expanded(
-                    child: AppButtonWidget(
-                      buttonTitle: 'JEMPUTAN AIN',
-                      buttonIcon: Icons.female,
-                      buttonFunction: () {
-                        setState(() {
-                          isPerempuan = true;
-                        });
-                      },
-                    ),
-                  ),
-                  SizedBox(width: 16.w),
-                  Expanded(
-                    child: AppButtonWidget(
-                      buttonTitle: 'JEMPUTAN ARIF',
-                      buttonIcon: Icons.male,
-                      buttonFunction: () {
-                        setState(() {
-                          isPerempuan = false;
-                        });
-                      },
-                    ),
-                  ),
-                ],
-              ),
+      body: Column(
+        children: [
+          const SizedBox(height: 32),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: AppButtonWidget(
+              buttonTitle: 'Lihat RSVP',
+              buttonIcon: Icons.calendar_month,
+              buttonFunction: () {
+                Get.to(const RsvpPage());
+              },
+              width: MediaQuery.of(context).size.width,
             ),
-            SizedBox(height: 16.w),
-            Text(
-              isPerempuan ? 'JEMPUTAN AIN' : 'JEMPUTAN ARIF',
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
+          const SizedBox(height: 32),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: AppButtonWidget(
+              buttonTitle: 'Lihat Ucapan',
+              buttonIcon: Icons.sticky_note_2_outlined,
+              buttonFunction: () {
+                Get.to(const UcapanPage());
+              },
+              width: MediaQuery.of(context).size.width,
             ),
-            RSVPDetail(
-              isPerempuan: isPerempuan,
-            ),
-            SizedBox(height: 80.w)
-          ],
-        ),
+          ),
+          SizedBox(height: 80.w)
+        ],
       ),
     );
   }

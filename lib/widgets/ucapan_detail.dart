@@ -1,25 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kad_kahwin/models/ucapan_form_model.dart';
 
 import '../api/api.dart';
-import '../models/models.dart';
 
-class RSVPDetail extends StatefulWidget {
-  RSVPDetail({Key? key, required this.isPerempuan}) : super(key: key);
+class UcapanDetail extends StatelessWidget {
+  UcapanDetail({Key? key, required this.isPerempuan}) : super(key: key);
   bool isPerempuan;
 
   @override
-  State<RSVPDetail> createState() => _RSVPDetailState();
-}
-
-class _RSVPDetailState extends State<RSVPDetail> {
-  @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: widget.isPerempuan
-          ? FirebaseApi.rsvpStreamPerempuan
-          : FirebaseApi.rsvpStreamLelaki,
+      stream: isPerempuan
+          ? FirebaseApi.ucapanStreamPerempuan
+          : FirebaseApi.ucapanStreamLelaki,
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.hasError) {
           return Column(
@@ -37,25 +32,8 @@ class _RSVPDetailState extends State<RSVPDetail> {
           return const CircularProgressIndicator();
         }
 
-        int pax = 0;
-
-        for (var a in snapshot.data!.docs) {
-          RSVPFormModel data = RSVPFormModel.fromJson(
-            a.data() as Map<String, dynamic>,
-          );
-          pax = pax + data.pax;
-        }
-
         return Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Text(
-                'JUMLAH RSVP - $pax',
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              ),
-            ),
             Container(
               decoration: BoxDecoration(
                 border: Border.all(
@@ -65,12 +43,18 @@ class _RSVPDetailState extends State<RSVPDetail> {
               ),
               margin: const EdgeInsets.symmetric(horizontal: 16),
               child: Table(
+                columnWidths: const {
+                  0: FractionColumnWidth(0.33),
+                  // First column with 1/3 width
+                  1: FractionColumnWidth(0.67),
+                  // Second column with 2/3 width
+                },
                 border: TableBorder.all(), // Add a border to the entire table
                 children: [
                   TableRow(
                     children: [
                       Container(
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(16),
                         child: const Center(
                           child: Text(
                             'Name',
@@ -80,10 +64,10 @@ class _RSVPDetailState extends State<RSVPDetail> {
                         ),
                       ),
                       Container(
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(16),
                         child: const Center(
                           child: Text(
-                            'Pax',
+                            'Ucapan',
                             style: TextStyle(fontWeight: FontWeight.bold),
                             textAlign: TextAlign.center,
                           ),
@@ -93,13 +77,13 @@ class _RSVPDetailState extends State<RSVPDetail> {
                   ),
                   ...snapshot.data!.docs.reversed
                       .map((DocumentSnapshot document) {
-                    RSVPFormModel data = RSVPFormModel.fromJson(
+                    UcapanFormModel data = UcapanFormModel.fromJson(
                       document.data() as Map<String, dynamic>,
                     );
                     return TableRow(
                       children: [
                         Container(
-                          padding: const EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(16),
                           child: Center(
                             child: Text(
                               data.name,
@@ -108,13 +92,8 @@ class _RSVPDetailState extends State<RSVPDetail> {
                           ),
                         ),
                         Container(
-                          padding: const EdgeInsets.all(8),
-                          child: Center(
-                            child: Text(
-                              data.pax.toString(),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
+                          padding: const EdgeInsets.all(16),
+                          child: Text(data.wish.toString()),
                         ),
                       ],
                     );

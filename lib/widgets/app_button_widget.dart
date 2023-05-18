@@ -5,11 +5,14 @@ class AppButtonWidget extends StatelessWidget {
   final String buttonTitle;
   final IconData buttonIcon;
   final VoidCallback buttonFunction;
+  final double? width;
+
   const AppButtonWidget({
     Key? key,
     required this.buttonTitle,
     required this.buttonIcon,
     required this.buttonFunction,
+    this.width,
   }) : super(key: key);
 
   @override
@@ -18,9 +21,10 @@ class AppButtonWidget extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.w),
+            borderRadius: BorderRadius.circular(10),
           ),
-          minimumSize: Size(140.w, 50.w),
+          minimumSize:
+              Size(width?.w ?? (MediaQuery.of(context).size.width), 75),
         ),
         onPressed: () {
           buttonFunction();
